@@ -9,8 +9,8 @@ class Servidor(Resource):
     argumentos = reqparse.RequestParser()
     argumentos.add_argument('hostname', type=str, required=True, help="O hostname e necessario para a criacao do servidor")
     argumentos.add_argument('tipo')
-    argumentos.add_argument('SO')
-    argumentos.add_argument('macaddress'type=str, required=True, help="O macaddress e necessario para a criacao do servidor")
+    argumentos.add_argument('so')
+    argumentos.add_argument('macaddress', type=str, required=True, help="O macaddress e necessario para a criacao do servidor")
     argumentos.add_argument('ipaddress')
     argumentos.add_argument('netmask')
     argumentos.add_argument('gateway')
@@ -38,7 +38,7 @@ class Servidor(Resource):
         servidor_encontrado = ServidorModel.find_servidor(servidor_id)
         if servidor_encontrado:
             servidor_encontrado.update_servidor(**dados)
-            servidor_encontrado.save_hotel()
+            servidor_encontrado.save_servidor()
             return servidor_encontrado.json(), 200
         servidor = ServidorModel(servidor_id, **dados)
         try:
@@ -47,12 +47,12 @@ class Servidor(Resource):
             return {'message': 'Erro ao salvar no banco de dados, validar a comunicacao com o banco.'}, 500
         return servidor.json(), 201
 
-    def delete(self, hotel_id):
+    def delete(self, servidor_id):
         servidor = ServidorModel.find_servidor(servidor_id)
         if servidor:
             try:
                 servidor.delete_servidor()
             except:
                 return {'message': 'Erro ao salvar no banco de dados, validar a comunicacao com o banco.'}, 500
-            return: {'message': 'servidor deletado.'}
+            return {'message': 'servidor deletado.'}
         return {'message': 'servidor nao existe'}, 404
