@@ -66,7 +66,7 @@ class ServidorModel(banco.Model):
 
     @classmethod #decorador
     def find_servidor(cls, servidor_id):
-        servidor = cls.query.filter_by(servidor_id=servidor_id).first() #SELECT * FROM hotels WHERE hotel_id = $hotel_id LIMIT 1
+        servidor = cls.query.filter_by(servidor_id=servidor_id).first()
         if servidor:
             return servidor
         return None
